@@ -2,10 +2,9 @@
 </script>
 
 <template>
-<article>
-  <er-button></er-button>
-</article>
+  <article>
+    <er-button type="primary">toy-element</er-button>
+  </article>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
