@@ -51,23 +51,26 @@ describe("Button.vue", () => {
     expect((wrapper.element as any).type).toBe("submit");
   });
   // Test the click event with and without throttle
-  // it.each([
-  //   ["withoutThrottle", false],
-  //   ["withThrottle", true],
-  // ])("emits click event %s", async (_, useThrottle) => {
-  //   const clickSpy = vi.fn();
-  //   const wrapper = mount(() => (
-  //     <Button
-  //       onClick={clickSpy}
-  //       {...{
-  //         useThrottle,
-  //         throttleDuration: 400,
-  //       }}
-  //     />
-  //   ));
-  //   await wrapper.get("button").trigger("click");
-  //   expect(clickSpy).toHaveBeenCalled();
-  // });
+  it.each([
+    ["withoutThrottle", false],
+    ["withThrottle", true],
+  ])("emits click event %s", async (_, useThrottle) => {
+    const clickSpy = vi.fn(()=>{
+      return
+    });
+    const wrapper = mount(() => (
+      <Button
+        onClick={clickSpy}
+        {...{
+          useThrottle,
+          throttleDuration: 400,
+        }}
+      />
+    ));
+    await wrapper.get("button").trigger("click");
+    await wrapper.get("button").trigger("click");
+    expect(clickSpy).toBeCalled()
+  });
   // Props: tag
   it("should renders the custom tag when tag prop is set", () => {
     const wrapper = mount(Button, {

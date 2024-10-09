@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>30/30</span>
+                <span class='fraction'>47/47</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>30/30</span>
+                <span class='fraction'>47/47</span>
             </div>
         
             
@@ -92,7 +92,41 @@
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -122,42 +156,59 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">&lt;script setup lang="ts"&gt;
-import { ButtonProps } from './types';
+import type { ButtonProps, ButtonEmits, ButtonInstance } from './types';
 import { ref } from 'vue';
+import { throttle } from 'lodash-es'
 &nbsp;
 defineOptions({
-  name: 'ErButton'
+  name: 'ErButton',
 })
 const props = withDefaults(defineProps&lt;ButtonProps&gt;(), {
   tag: 'button',
   nativeType: 'button',
+  useThrottle: true,
+  throttleDuration: 500
+})
+&nbsp;
+const emits = defineEmits&lt;ButtonEmits&gt;()
+&nbsp;
+const _ref = ref&lt;HTMLElement&gt;()
+defineExpose&lt;ButtonInstance&gt;({
+  ref: _ref
 })
 &nbsp;
 const slots = defineSlots()
-const _ref = ref&lt;HTMLElement&gt;()
 &nbsp;
+// 点击事件
+const handleClick = (e: MouseEvent) =&gt; emits('click', e)
+const throttleClick = throttle(handleClick, props.throttleDuration)
 &lt;/script&gt;
 &nbsp;
 &lt;template&gt;
-  &lt;component :is="props.tag" :type="props.tag === 'button' ? props.nativeType : void 0" class="er-button" :class="{
-    [`er-button--${type}`]: type,
-    [`er-button--${size}`]: size,
-    'is-plain': plain,
-    'is-circle': circle,
-    'is-round': round,
-    'is-loading': loading,
-    'is-disabled': disabled
-  }" :disabled="props.disabled || loading ? true : void 0" ref="_ref"&gt;
+  &lt;component ref="_ref" :is="props.tag" :type="props.tag === 'button' ? props.nativeType : void 0" class="er-button"
+    :class="{
+      [`er-button--${type}`]: type,
+      [`er-button--${size}`]: size,
+      'is-plain': plain,
+      'is-circle': circle,
+      'is-round': round,
+      'is-loading': loading,
+      'is-disabled': disabled
+    }" :disabled="props.disabled || loading ? true : void 0"
+@click="(e:MouseEvent)=&gt;props.useThrottle ? throttleClick(e) : handleClick(e)"    &gt;
     &lt;slot&gt;&lt;/slot&gt;
   &lt;/component&gt;
-&lt;/template&gt;</pre></td></tr></table></pre>
+&lt;/template&gt;
+&lt;!-- @click="props.useThrottle ? throttleClick : handleClick" --&gt;
+&nbsp;
+&lt;!-- @click="(e:MouseEvent)=&gt;props.useThrottle ? throttleClick(e) : handleClick(e)" --&gt;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-09-19T13:11:53.902Z
+                at 2024-09-22T04:30:17.343Z
             </div>
         <script src="prettify.js"></script>
         <script>
