@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { ButtonProps, ButtonEmits, ButtonInstance } from './types';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { throttle } from 'lodash-es'
+import ErIcon from '../Icon/Icon.vue'
+
 
 defineOptions({
   name: 'ErButton',
@@ -22,6 +24,11 @@ defineExpose<ButtonInstance>({
 
 const slots = defineSlots()
 
+const iconStyle = computed(() => {
+  {
+    marginRight: slots.default ? '6px' : '0px'
+  }
+})
 // 点击事件
 const handleClick = (e: MouseEvent) => emits('click', e)
 const throttleClick = throttle(handleClick, props.throttleDuration)
@@ -37,8 +44,14 @@ const throttleClick = throttle(handleClick, props.throttleDuration)
       'is-round': round,
       'is-loading': loading,
       'is-disabled': disabled
-    }" :disabled="props.disabled || loading ? true : void 0"
-     @click="(e:MouseEvent)=>props.useThrottle ? throttleClick(e) : handleClick(e)"    >
+    }" :autofocus="autofocus" :disabled="props.disabled || loading ? true : void 0"
+    @click="(e: MouseEvent) => props.useThrottle ? throttleClick(e) : handleClick(e)">
+    <template v-if="loading">
+      <slot name="loading">
+        <er-icon class="loading-icon" :icon="loadingIcon ?? 'spinner'" spin :style="iconStyle" size="1x" />
+      </slot>
+    </template>
+    <er-icon v-if="icon && !loading" :icon="icon" size="1x" :style="iconStyle" />
     <slot></slot>
   </component>
 </template>
