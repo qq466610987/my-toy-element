@@ -31,7 +31,12 @@ const iconStyle = computed(() => {
 })
 // 点击事件
 const handleClick = (e: MouseEvent) => emits('click', e)
-const throttleClick = throttle(handleClick, props.throttleDuration)
+const throttleClick = throttle(
+  handleClick, 
+  props.throttleDuration,
+  {
+    trailing: false
+  })
 </script>
 
 <template>

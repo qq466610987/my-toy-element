@@ -1,7 +1,7 @@
-import { describe, it, expect, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
-
-import Button from './Button.vue'
+import { describe, it, expect, vi } from "vitest";
+import { mount } from "@vue/test-utils";
+import Button from "./Button.vue";
+import Icon from "../Icon/Icon.vue";
 
 describe("Button.vue", () => {
   // Props: type
@@ -41,7 +41,7 @@ describe("Button.vue", () => {
         },
       });
       expect(wrapper.classes()).toContain(className);
-    }
+    },
   );
   it("should has the correct native type attribute when native-type prop is set", () => {
     const wrapper = mount(Button, {
@@ -55,8 +55,8 @@ describe("Button.vue", () => {
     ["withoutThrottle", false],
     ["withThrottle", true],
   ])("emits click event %s", async (_, useThrottle) => {
-    const clickSpy = vi.fn(()=>{
-      return
+    const clickSpy = vi.fn(() => {
+      return;
     });
     const wrapper = mount(() => (
       <Button
@@ -69,7 +69,7 @@ describe("Button.vue", () => {
     ));
     await wrapper.get("button").trigger("click");
     await wrapper.get("button").trigger("click");
-    expect(clickSpy).toBeCalled()
+    expect(clickSpy).toBeCalledTimes(useThrottle ? 1 : 2);
   });
   // Props: tag
   it("should renders the custom tag when tag prop is set", () => {
@@ -84,5 +84,18 @@ describe("Button.vue", () => {
     await wrapper.trigger("click");
     expect(wrapper.emitted().click).toHaveLength(1);
   });
-});
 
+  it("should display loading icon and not emit click event when loading ", () => {
+    const wrapper = mount(Button, {
+      props: { loading: true },
+      global: {
+        stubs: ["ErIcon"],
+      },
+    });
+    const iconElement = wrapper.findComponent(Icon);
+    expect(iconElement.exists()).toBe(true);
+    expect(iconElement.attributes("icon")).toBe("spinner");
+    wrapper.trigger("click");
+    expect(wrapper.emitted().click).toBeUndefined();
+  });
+});
