@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for Icon/Icon.vue</title>
+    <title>Code coverage report for Button/ButtonGroup.vue</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">Icon</a> Icon.vue</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">Button</a> ButtonGroup.vue</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -107,29 +107,29 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
-  &lt;i class="er-icon" :class="[`er-icon-${props.type}`]" :style="customStyles" v-bind="$attrs"&gt;
-    &lt;font-awesome-icon v-bind="filterProps" /&gt;
-  &lt;/i&gt;
-&lt;/template&gt;
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">&lt;script setup lang="ts"&gt;
+import type { ButtonGroupProps, ButtonGroupContext } from './types'
+import { BUTTON_GROUP_CTX } from './constants'
+import { provide, reactive, toRef } from 'vue';
 &nbsp;
-&lt;script setup lang="ts" name="ErIcon"&gt;
-import type { IconProps } from "./types";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { omit } from "lodash-es";
-import { computed } from "vue";
+defineOptions({ name: 'ErButtonGroup' })
+const props = defineProps&lt;ButtonGroupProps&gt;()
+provide(
+  BUTTON_GROUP_CTX,
+  reactive({
+    size: toRef(props.size),
+    type: toRef(props.type),
+    disabled: toRef(props.disabled)
+  })
+)
 &nbsp;
-defineOptions({
-  name: "ErIcon",
-  inheritAttrs: false,
-});
-&nbsp;
-const props = defineProps&lt;IconProps&gt;()
-const filterProps = computed(() =&gt; omit(props, ['type', 'color']))
-const customStyles = computed(() =&gt; ({ color: props.color ?? void 0 }));
 &lt;/script&gt;
 &nbsp;
-&lt;style scoped&gt;&lt;/style&gt;</pre></td></tr></table></pre>
+&lt;template&gt;
+  &lt;div class="er-button-group"&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

@@ -1,6 +1,6 @@
-import { ErButton } from "../components";
+import { ErButton, ErButtonGroup, ErIcon } from "../components";
 import type { Plugin } from "vue";
 
 export default [
-  ErButton,
+  ErButton, ErButtonGroup, ErIcon
 ] as Plugin[];

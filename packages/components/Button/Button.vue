@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { ButtonProps, ButtonEmits, ButtonInstance } from './types';
-import { computed, ref } from 'vue';
+import { computed, ref, inject } from 'vue';
 import { throttle } from 'lodash-es'
 import ErIcon from '../Icon/Icon.vue'
+import { BUTTON_GROUP_CTX } from './constants';
 
 
 defineOptions({
@@ -24,6 +25,12 @@ defineExpose<ButtonInstance>({
 
 const slots = defineSlots()
 
+const ctx = inject(BUTTON_GROUP_CTX, void 0)
+
+const size = computed(() => ctx?.size ?? props.size ?? '')
+const buttonType = computed(() => ctx?.type ?? props.type ?? '')
+const disabled = computed(() => ctx?.disabled ?? props.disabled ?? false)
+
 const iconStyle = computed(() => {
   {
     marginRight: slots.default ? '6px' : '0px'
@@ -32,7 +39,7 @@ const iconStyle = computed(() => {
 // 点击事件
 const handleClick = (e: MouseEvent) => emits('click', e)
 const throttleClick = throttle(
-  handleClick, 
+  handleClick,
   props.throttleDuration,
   {
     trailing: false
@@ -42,7 +49,7 @@ const throttleClick = throttle(
 <template>
   <component ref="_ref" :is="props.tag" :type="props.tag === 'button' ? props.nativeType : void 0" class="er-button"
     :class="{
-      [`er-button--${type}`]: type,
+      [`er-button--${buttonType}`]: buttonType,
       [`er-button--${size}`]: size,
       'is-plain': plain,
       'is-circle': circle,
