@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "pnpm --filter toy-element build",
     "dev": "pnpm --filter @toy-element/play dev",
     "story": "pnpm --filter @toy-element/play storybook",
     "docs:dev": "pnpm --filter @toy-element/docs dev",
@@ -22,6 +23,8 @@
     "@vitejs/plugin-vue": "^5.0.4",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vue/tsconfig": "^0.5.1",
+    "move-file-cli": "^3.0.0",
+    "npm-run-all": "^3.0.0",
     "postcss-color-mix": "^1.1.0",
     "postcss-each": "^1.1.0",
     "postcss-each-variables": "^0.3.0",
