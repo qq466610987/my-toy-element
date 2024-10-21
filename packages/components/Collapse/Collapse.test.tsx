@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, test, vi } from "vitest";
 import { DOMWrapper, mount, type VueWrapper } from "@vue/test-utils";
-
+import { ref } from "vue";
 import Collapse from "./Collapse.vue";
 import CollapseItem from "./CollapseItem.vue";
 
@@ -42,7 +42,7 @@ describe("Collapse.vue", () => {
     );
 
     headers = wrapper.findAll(".er-collapse-item__header");
-    contents = wrapper.findAll(".er-collapse-item__wapper");
+    contents = wrapper.findAll(".er-collapse-item__wrapper");
 
     firstHeader = headers[0];
     secondHeader = headers[1];
@@ -161,5 +161,60 @@ describe("Collapse.vue", () => {
       },
     );
   });
-  expect(() => wrapper.vm.$nextTick()).toThrow();
+
+  test("测试点击事件时的状态更新次数", async () => {
+    const modelValue = ref(['a']);
+    const wrapper = mount(
+      () => (
+        <Collapse v-model={modelValue.value} {...{ onChange }}>
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+          <CollapseItem name="b" title="title b">
+            content b
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: {
+          stubs: ["ErIcon"],
+        },
+        attachTo: document.body,
+      }
+    );
+
+    const updateModelValueSpy = vi.fn();
+    wrapper.vm.$watch(() => modelValue.value, updateModelValueSpy);
+
+    const headers = wrapper.findAll(".er-collapse-item__header");
+    const contents = wrapper.findAll(".er-collapse-item__wrapper");
+
+    // 初始状态检查
+    expect(headers[0].classes()).toContain("is-active");
+    expect(contents[0].isVisible()).toBeTruthy();
+    expect(headers[1].classes()).not.toContain("is-active");
+    expect(contents[1].isVisible()).toBeFalsy();
+
+    // 第一次点击
+    await headers[0].trigger("click");
+    await wrapper.vm.$nextTick();
+
+    // 状态变化检查
+    expect(headers[0].classes()).not.toContain("is-active");
+    expect(contents[0].isVisible()).toBeFalsy();
+
+    // 第二次点击
+    await headers[1].trigger("click");
+    await wrapper.vm.$nextTick();
+
+    // 状态变化检查
+    expect(headers[1].classes()).toContain("is-active");
+    expect(contents[1].isVisible()).toBeTruthy();
+
+    // 检查 modelValue 更新次数
+    expect(updateModelValueSpy).toHaveBeenCalledTimes(2);
+
+    // 检查 onChange 调用次数
+    expect(onChange).toHaveBeenCalledTimes(2);
+  });
 });
