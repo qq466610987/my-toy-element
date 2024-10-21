@@ -26,7 +26,9 @@
     "build:umd": "vite build --config vite.umd.config.ts",
     "build:es": "vite build --config vite.es.config.ts",
     "move-style": "move-file dist/es/index.css dist/index.css",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf dist",
+    "release": "release-it"
   },
   "keywords": [],
   "author": "",
@@ -40,7 +42,8 @@
   },
   "devDependencies": {
     "@toy-element/components": "workspace:*",
-    "vite-plugin-dts": "^3.9.1"
+    "vite-plugin-dts": "^3.9.1",
+    "release-it": "^17.2.1"
   },
   "peerDependencies": {
     "vue": "^3.4.19"

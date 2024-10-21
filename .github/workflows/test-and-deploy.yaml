@@ -3,7 +3,9 @@ name: Test and deploy
 on:
   push:
     branches:
-      - main
+      - master
+      
+  workflow_dispatch:
 
 jobs:
   test:
