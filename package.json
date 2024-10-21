@@ -11,8 +11,7 @@
     "docs:build": "pnpm --filter @toy-element/docs build",
     "test": "pnpm --filter @toy-element/components test",
     "release": "pnpm --filter toy-element release",
-    "clean": "rimraf dist",
-    "release": "release-it"
+    "clean": "rimraf dist"
   },
   "keywords": [],
   "author": "",
