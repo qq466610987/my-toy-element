@@ -8,6 +8,7 @@ const config = {
     "@chromatic-com/storybook",
     "@storybook/addon-interactions",
   ],
+  docs: {},
   framework: {
     name: "@storybook/vue3-vite",
     options: {},

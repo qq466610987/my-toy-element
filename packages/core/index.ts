@@ -6,6 +6,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 
 library.add(fas)
 const installer = makeInstaller(components);
-export default installer;
 
-export * from '@toy-element/components'
+export * from '../components'
+export default installer;

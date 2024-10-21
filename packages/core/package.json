@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "my-toy-element",
   "main": "./dist/umd/index.umd.cjs",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/core/index.d.ts",
+  "module": "./dist/es/index.js",
+  "types": "./dist/es/type/core/index.d.ts",
   "type": "module",
   "exports": {
     ".": {

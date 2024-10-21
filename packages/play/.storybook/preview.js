@@ -1,4 +1,6 @@
 /** @type { import('@storybook/vue3').Preview } */
+import "toy-element/dist/index.css";
+
 const preview = {
   parameters: {
     controls: {
