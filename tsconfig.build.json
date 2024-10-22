@@ -34,5 +34,14 @@
   ],
   "exclude": [
     "packages/components/vitest.config.ts",
-  ]
+  ],
+  "types": [
+    "node"
+  ],
+  "baseUrl": "./",
+  "paths": {
+    "@toy-element/components": [
+      "./packages/components"
+    ]
+  }
 }

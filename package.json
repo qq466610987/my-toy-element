@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "pnpm --filter toy-element build",
-    "dev": "pnpm run build && pnpm --filter @toy-element/play dev",
-    "story": "pnpm run build && pnpm --filter @toy-element/play storybook",
+    "dev": "pnpm --filter @toy-element/play dev",
+    "story": "pnpm --filter @toy-element/play storybook",
+    "build": "cross-env NODE_ENV=production pnpm --filter toy-element build",
+    "build:dev": "cross-env NODE_ENV=development pnpm --filter toy-element build:watch",
     "docs:dev": "pnpm --filter @toy-element/docs dev",
     "docs:build": "pnpm --filter @toy-element/docs build",
-    "test": "pnpm --filter @toy-element/components test",
+    "test": "cross-env NODE_ENV=test pnpm --filter @toy-element/components test",
     "release": "pnpm --filter toy-element release",
     "clean": "rimraf dist"
   },
@@ -22,9 +23,11 @@
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.11.20",
+    "@types/shelljs": "^0.8.15",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vue/tsconfig": "^0.5.1",
+    "shelljs": "^0.8.5",
     "move-file-cli": "^3.0.0",
     "npm-run-all": "^3.0.0",
     "postcss-color-mix": "^1.1.0",
@@ -37,7 +40,8 @@
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
     "vitest": "^1.4.0",
-    "vue-tsc": "^1.8.27"
+    "vue-tsc": "^1.8.27",
+    "cross-env": "^7.0.3"
   },
   "dependencies": {
     "@toy-element/hooks": "workspace:*",

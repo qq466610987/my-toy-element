@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { COLLAPSE_CTX_KEY } from "./constants";
 import type { CollapseProps, CollapseEmits, CollapseContext, CollapseItemName } from "./types";
-import { provide, ref, watch } from "vue";
+import { provide, ref, watch, watchEffect } from "vue";
 
 defineOptions({
   name: "ErCollapse",
@@ -10,9 +10,11 @@ const props = defineProps<CollapseProps>();
 const emit = defineEmits<CollapseEmits>();
 const activeNames = ref(props.modelValue);
 
-if (props.accordion && activeNames.value.length > 1) {
-  console.warn("accordion mode must set only one active item");
-}
+watchEffect(() => {
+  if (props.accordion && activeNames.value.length > 1) {
+    console.warn("accordion mode must set only one active item");
+  }
+});
 
 function handleItemClick(item: CollapseItemName) {
   let _activeNames = [...activeNames.value]
@@ -25,7 +27,7 @@ function handleItemClick(item: CollapseItemName) {
   // 正常模式
   const index = _activeNames.indexOf(item)
   if (index > -1) {
-    _activeNames.slice(index, 1)
+    _activeNames.splice(index, 1)
   } else {
     _activeNames.push(item)
   }
