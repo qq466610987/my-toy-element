@@ -51,12 +51,14 @@ let closeDebounce: DebouncedFunc<() => void> | void;
 
 function openFinal() {
   // 在打开 Tooltip 时，先取消可能正在进行的关闭操作。
+  // 这里这样写是因为打开和关闭方法都是 debounce 的，所以需要先取消再执行
   closeDebounce?.cancel();
   openDebounce?.();
 }
 
 function closeFinal() {
   // 在关闭 Tooltip 时，先取消可能正在进行的打开操作
+  // 这里这样写是因为打开和关闭方法都是 debounce 的，所以需要先取消再执行
   openDebounce?.cancel();
   closeDebounce?.();
 }
