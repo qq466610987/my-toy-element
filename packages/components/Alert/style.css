@@ -101,18 +101,12 @@
 
 @each $val in success, warning, info, danger {
   .er-alert__$(val).er-alert__light {
-    --er-alert-text-color: var(--er-color-$(
-        val)
-    );
-  --er-alert-bg-color: var(--er-color-$(
-      val)-light-9
-  );
-}
+    --er-alert-text-color: var(--er-color-$(val));
+    --er-alert-bg-color: var(--er-color-$(val)-light-9);
+  }
 
-.er-alert__$(val).er-alert__dark {
-  --er-alert-text-color: var(--er-color-white);
-  --er-alert-bg-color: var(--er-color-$(
-      val)
-  );
-}
+  .er-alert__$(val).er-alert__dark {
+    --er-alert-text-color: var(--er-color-white);
+    --er-alert-bg-color: var(--er-color-$(val));
+  }
 }
