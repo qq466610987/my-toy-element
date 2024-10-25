@@ -19,6 +19,10 @@ const activeNames = ref(["a"]);
       </er-collapse-item>
     </er-collapse>
   </article>
+  <er-tooltip placement="top">
+    <template #content> multiple lines<br />second line </template>
+    <er-button>Top center</er-button>
+  </er-tooltip>
 </template>
 
 <style scoped></style>

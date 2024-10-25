@@ -173,6 +173,7 @@ onUnmounted(() => {
   console.log("unmount", popperInstance);
   destroyPopperInstance();
 });
+
 defineExpose<TooltipInstance>({
   show,
   hide,
@@ -206,3 +207,7 @@ defineExpose<TooltipInstance>({
     </transition>
   </div>
 </template>
+
+<style scoped>
+@import "./style.css";
+</style>

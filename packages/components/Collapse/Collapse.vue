@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { COLLAPSE_CTX_KEY } from "./constants";
-import type { CollapseProps, CollapseEmits, CollapseContext, CollapseItemName } from "./types";
+import type { CollapseProps, CollapseEmits, CollapseItemName } from "./types";
 import { provide, ref, watch, watchEffect } from "vue";
 
 defineOptions({

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ButtonGroupProps, ButtonGroupContext } from './types'
+import type { ButtonGroupProps } from './types'
 import { BUTTON_GROUP_CTX } from './constants'
 import { provide, reactive, toRef } from 'vue';
 
